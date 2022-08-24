@@ -1,4 +1,28 @@
 #include <bits/stdc++.h>
+//SPACE OPTIMISED SOLUTION
+int uniquePaths(int m, int n) {
+	// Write your code here.
+    vector<int> dp(n, -1);
+    dp[0] = 1;
+    for(int j = 1; j < n; j++){
+        dp[j] = dp[j-1];
+    }
+    for(int i = 1; i < m; i++){
+        vector<int> temp(n, -1);
+        for(int j = 0; j < n; j++){
+            int up = 0, left = 0;
+            up = dp[j];
+            if(j > 0)
+                left = temp[j-1];
+            temp[j] = up + left;
+        }
+        dp = temp;
+    }
+    return dp[n-1];
+}
+
+
+
 //TABULATION SOLUTION
 int uniquePaths(int m, int n) {
 	// Write your code here.
