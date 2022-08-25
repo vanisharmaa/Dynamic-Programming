@@ -4,6 +4,37 @@ Each point in the grid has some cost associated with it.
 Find a path from top left i.e (0,0) to the bottom right i.e ('N'-1, 'M'-1) which minimizes the sum of the ocst of all the numbers along the path.
 You need to tell the minimum sum of the path.
 */
+
+
+//SPACE OPTIMISATION
+int minSumPath(vector<vector<int>> &grid) {
+    // Write your code here
+    int n = grid.size();
+    int m = grid[0].size();
+    vector<int> dp(m, 0);
+    //dp[0] = grid[i][j];
+    for (int i = 0; i < n; i++){
+        vector<int> temp(m, 0);
+        for (int j = 0; j < m; j++){
+            if (i == 0 && j == 0){
+                temp[0] = grid[i][j];
+            }
+            else{
+            int up = 1e9, left = 1e9;
+            if (i > 0)
+                up = grid[i][j] + dp[j];
+            if (j > 0)
+                left = grid[i][j] + temp[j-1];
+            temp[j] = min(up, left);
+            }
+        }
+        dp = temp;
+    }
+    return dp[m-1];
+}
+
+
+
 //TABULATION
 int minSumPath(vector<vector<int>> &grid) {
     // Write your code here
