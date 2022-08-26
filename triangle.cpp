@@ -5,6 +5,28 @@ You can move only to the adjacent number of row below each step.
 For example, if you are at index j in row, then you can move to i or i+1 index in row j+1 in each step.
 */
 
+//SPACE OPTIMIZATION
+int minimumPathSum(vector<vector<int>>& triangle, int n){
+    vector<vector<int>> dp(n, vector<int>(n, 0));
+    vector<int> next(n, 0);
+    for(int i = n-1; i >= 0; i--){
+        vector<int> curr(n,0);
+        for(int j = i; j>= 0; j--){
+            if (i == n-1){
+                curr[j] = triangle[i][j];
+                continue;
+            }
+            int down = triangle[i][j] + next[j];
+            int right = triangle[i][j] + next[j+1];
+            curr[j] = min(down, right);
+        }
+        next = curr;
+    }
+    return next[0];
+}
+
+
+
 //TABULATION
 int minimumPathSum(vector<vector<int>>& triangle, int n){
     vector<vector<int>> dp(n, vector<int>(n, 0));
