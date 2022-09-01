@@ -1,0 +1,44 @@
+/*
+
+You have been given an N*M matrix filled with integer numbers. Find the maximum sum that can be obtained from a path starting from any cell in the first row to any cell in the last row.
+From a cell in a row, you can move to another cell directly below that row, or diagonally below left or right.
+So from a particular cell(row, col), we can move in three directions i.e
+Down: (row+1, col)
+Down left diagonal: (row+1, col-1)
+Down right diagonal: (row+1, col+1)
+
+*/
+
+
+//MEMOIZATION
+
+int helper(vector<vector<int>> &matrix, int m, int n, int i, int j, vector<vector<int>> &dp){
+    if (i >= m)
+        return -1e9;
+    if (j < 0 || j >= n)
+        return -1e9;
+    if(i == m-1)
+        return dp[i][j] = matrix[i][j];
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    int down = matrix[i][j] + helper(matrix, m, n, i+1, j, dp);
+    int left = matrix[i][j] + helper(matrix, m, n, i+1, j-1, dp);
+    int right = matrix[i][j] + helper(matrix, m, n, i+1, j+1, dp);
+    return dp[i][j] = max(down, max(left, right));
+}
+int getMaxPathSum(vector<vector<int>> &matrix)
+{
+    //  Write your code here.
+    int m = matrix.size();
+    int n = matrix[0].size();
+    vector<vector<int>> dp(m, vector<int>(n, -1));
+    vector<int> col(n, -1);
+    for(int i = 0; i < n; i++){
+        col[i] = helper(matrix, m, n, 0, i, dp);
+    }
+    int maxi = -1e9;
+    for(int i = 0; i < n; i++){
+        maxi = max(maxi, col[i]);
+    }
+    return maxi;
+}
