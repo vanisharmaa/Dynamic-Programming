@@ -9,6 +9,40 @@ Down right diagonal: (row+1, col+1)
 
 */
 
+//SPACE OPTIMISATION
+
+int getMaxPathSum(vector<vector<int>> &matrix)
+{
+    //  Write your code here.
+    int m = matrix.size();
+    int n = matrix[0].size();
+    vector<int> prev(n, 0);
+    vector<int> curr(n, 0);
+    for(int i = 0; i < n; i++){
+        prev[i] = matrix[0][i];
+    }
+    for(int i = 1; i < m; i++){
+        for(int j = 0; j < n; j++){
+                int up = matrix[i][j] + prev[j];
+                int left = -1e9;
+                if (j > 0)
+                    left = matrix[i][j] + prev[j-1];
+                int right = -1e9;
+                if (j < n-1)
+                    right = matrix[i][j] + prev[j+1];
+                curr[j] = max(up, max(left, right));
+        }
+        prev = curr;
+    }
+    int maxi = -1e9;
+    for(int i = 0; i < n; i++){
+        maxi = max(maxi, prev[i]);
+    }
+    return maxi;
+}
+
+
+
 //TABULATION
 
 int getMaxPathSum(vector<vector<int>> &matrix)
