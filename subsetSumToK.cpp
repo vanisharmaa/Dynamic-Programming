@@ -1,3 +1,26 @@
+//SPACE OPTIMISATION    
+#include <bits/stdc++.h> 
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    // Write your code here.
+    vector<bool> next(k+1, false);
+    next[0] = true;
+    next[arr[0]] = true;
+    for(int i = 1; i < n; i++){
+        vector<bool> curr(k+1, false);
+        curr[0] = true;
+        for(int j = 1; j <= k; j++){
+            bool notTake = next[j];
+            bool take = false;
+            if (arr[i] <= j){
+                take = next[j-arr[i]];
+            }
+            curr[j] = take || notTake;
+        }
+        next = curr;
+    }
+    return next[k];
+}
+
 //TABULATION SOLUTION
 #include <bits/stdc++.h> 
 
