@@ -1,3 +1,26 @@
+//TABULATION
+int findWays(vector<int> &num, int tar)
+{
+    // Write your code here.
+    int n = num.size();
+    vector<vector<int>> dp(n, vector<int>(tar+1, 0));
+    for(int i = 0; i < n; i++){
+        dp[i][0] = 1;
+    }
+    if (num[0] <= tar)
+        dp[0][num[0]] = 1;
+    for(int i = 1; i < n; i++){
+        for(int j = 0; j <= tar; j++){
+            int notTake, take = 0;
+            notTake = dp[i-1][j];
+            if (num[i] <= j)
+                take = dp[i-1][j-num[i]];
+            dp[i][j] = notTake + take;
+        }
+    }
+    return dp[n-1][tar];
+}
+
 //MEMOIZATION
 
 #include <bits/stdc++.h> 
