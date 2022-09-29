@@ -1,3 +1,27 @@
+//SPACE OPTIMISATION
+int findWays(vector<int> &num, int tar)
+{
+    // Write your code here.
+    int n = num.size();
+    vector<int> prev(tar+1, 0);
+    prev[0] = 1;
+    if (num[0] <= tar)
+        prev[num[0]] = 1;
+    for(int i = 1; i < n; i++){
+        vector<int> curr(tar+1, 0);
+        curr[0] = 1;
+        for(int j = 0; j <= tar; j++){
+            int notTake, take = 0;
+            notTake = prev[j];
+            if (num[i] <= j)
+                take = prev[j-num[i]];
+            curr[j] = notTake + take;
+        }
+        prev = curr;
+    }
+    return prev[tar];
+}
+
 //TABULATION
 int findWays(vector<int> &num, int tar)
 {
