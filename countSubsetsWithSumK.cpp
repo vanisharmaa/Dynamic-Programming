@@ -48,6 +48,33 @@ int findWays(vector<int> &num, int tar)
 //MEMOIZATION
 
 #include <bits/stdc++.h> 
+int f(vector<int>& nums, int i, int tar, vector<vector<int>>& dp){
+    if (tar < 0)
+        return 0;
+    if (i == 0){
+        if (tar == 0 and nums[i] == 0)
+            return 2;
+        else if (tar == 0 || tar == nums[i]) return 1;
+        else return 0;
+    }
+    if (dp[i][tar] != -1)
+        return dp[i][tar];
+    int notPick = f(nums, i-1, tar, dp);
+    int pick = 0;
+    if (tar - nums[i] >= 0)
+        pick = f(nums, i-1, tar-nums[i], dp);
+    return dp[i][tar] = pick + notPick;
+}
+int findWays(vector<int> &num, int tar)
+{
+    // Write your code here.
+    vector<vector<int>> dp(num.size(), vector<int>(tar+1, -1));
+    return f(num, num.size()-1, tar, dp);
+}
+
+//METHOD 2 - MEMOIZATION
+
+#include <bits/stdc++.h> 
 int f(vector<int> &num, int tar, int i, vector<vector<int>>& dp){
     if (tar < 0)
         return 0;
