@@ -71,8 +71,11 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
 int f(vector<int>& weight, vector<int>& value, int i, int w, vector<vector<int>>& dp){
     if (w < 0)
         return 0;
-    if (i < 0)
+    if (i == 0){
+        if (weight[0] <= w)
+            return value[0];
         return 0;
+    }
     if (dp[i][w] != -1)
         return dp[i][w];
     int notPick = f(weight, value, i-1, w, dp);
