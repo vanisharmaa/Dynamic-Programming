@@ -1,3 +1,30 @@
+//SPACE OPTIMIZATION
+#include <bits/stdc++.h> 
+int unboundedKnapsack(int n, int wt, vector<int> &profit, vector<int> &weight)
+{
+    // Write Your Code Here.
+    vector<int> prev(wt+1, 0);
+    for(int W = 0; W <= wt; W++){
+        if (W == 0){
+            prev[W] = 0;
+        }
+        prev[W] = profit[0]*(W/weight[0]);
+    }
+    for(int i = 1; i < n; i++){
+        vector<int> curr(wt+1, 0);
+        for (int W = 0; W <= wt; W++){
+            int notPick = prev[W];
+            int pick = 0;
+            if (W - weight[i] >= 0)
+                pick = profit[i] + curr[W - weight[i]];
+            curr[W] = max(pick, notPick);    
+        }
+        prev = curr;
+    }
+    return prev[wt];
+}
+
+
 //TABULATION
 #include <bits/stdc++.h> 
 int unboundedKnapsack(int n, int wt, vector<int> &profit, vector<int> &weight)
