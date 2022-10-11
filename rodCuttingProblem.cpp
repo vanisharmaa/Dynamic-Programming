@@ -1,3 +1,29 @@
+//SPACE OPTIMIZATION
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+    vector<int> prev(n+1, 0);
+    for(int N = 1; N <= n; N++){
+        if (n == 0)
+            prev[N] = 0;
+        else
+            prev[N] = price[0]*N;
+    }
+    for(int i = 1; i < n; i++){
+        vector<int> curr(n+1, 0);
+        for(int N = 1; N <= n; N++){
+            int notPick = prev[N];
+            int pick = -1e9;
+            int rodLen = i+1;
+            if (rodLen <= N)
+                pick = price[i] + curr[N-rodLen];
+            curr[N] = max(pick, notPick);
+        }
+        prev = curr;
+    }
+    return prev[n];
+}
+
 //TABULATION
 int cutRod(vector<int> &price, int n)
 {
