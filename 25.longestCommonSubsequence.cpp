@@ -1,4 +1,4 @@
-//Space Optimization
+//Space Optimization 
 int longestCommonSubsequence(string text1, string text2) {
     vector<int> prev(text2.size()+1, 0);
     for(int i2 = 0; i2 <= text2.size(); i2++){
